@@ -1,14 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0;url=https://d1cdbd1x576ga0.cloudfront.net/public/offers/feed.php?user_id=806670&api_key=09372f9e30477bfab889e35e0931353a&s1=&s2=">
-<script>
-window.location.replace("https://d1cdbd1x576ga0.cloudfront.net/public/offers/feed.php?user_id=806670&api_key=09372f9e30477bfab889e35e0931353a&s1=&s2=");
-</script>
-<title>Redirecting...</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OfferWall</title>
+
+<style>
+body{
+    margin:0;
+    background:#111827;
+    color:white;
+    font-family:Arial;
+}
+h1{
+    text-align:center;
+    padding:20px;
+}
+#offers{
+    max-width:900px;
+    margin:auto;
+    padding:15px;
+}
+.offer{
+    background:#1f2937;
+    border-radius:12px;
+    margin-bottom:15px;
+    padding:15px;
+}
+.offer img{
+    width:60px;
+    height:60px;
+    border-radius:10px;
+}
+button{
+    margin-top:10px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+}
+</style>
 </head>
+
 <body>
-Redirecting...
+
+<h1>OfferWall</h1>
+
+<div id="offers">
+Loading...
+</div>
+
+<script>
+
+const API="https://d1cdbd1x576ga0.cloudfront.net/public/offers/feed.php?user_id=806670&api_key=09372f9e30477bfab889e35e0931353a&s1=&s2=";
+
+fetch(API)
+.then(r=>r.json())
+.then(data=>{
+
+let html="";
+
+data.forEach(o=>{
+
+html+=`
+<div class="offer">
+
+<img src="${o.network_icon}">
+
+<h2>${o.name}</h2>
+
+<p>${o.anchor}</p>
+
+<p><b>${o.payout}</b></p>
+
+<button onclick="location.href='${o.url}'">
+Start
+</button>
+
+</div>
+`;
+
+});
+
+document.getElementById("offers").innerHTML=html;
+
+})
+.catch(e=>{
+
+document.getElementById("offers").innerHTML=
+"CORS Error أو API غير مسموح.";
+
+console.log(e);
+
+});
+
+</script>
+
 </body>
 </html>
